@@ -1,0 +1,93 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cib7ai
+  web:
+    locale: hu_HU
+    local-resolver: fixed
+    locale-date-format: yyyy-MM-dd HH:mm:ss
+
+  datasource:
+    url: jdbc:h2:file:./data/cib7db;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /sg-console
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          lob:
+            non_contextual_creation: true
+        id:
+          new_generator_mappings: true
+
+  mail:
+    protocol: smtp
+    host: mail.sanpe.hu
+    port: 587
+    username: noreplay-info@sanpe.hu
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail.transport.protocol: smtp
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+camunda:
+  bpm:
+    auto-deployment-enabled: true
+
+    admin-user:
+      id: admin
+      password: admin
+      firstName: Admin
+
+    filter:
+      create: All tasks
+
+    database:
+      schema-update: true
+
+    authorization:
+      enabled: false
+
+    history-level: full
+
+    job-execution:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: loggers,health,info,metrics,mappings
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  file:
+    name: cib7ai.log
+
+  level:
+    ROOT: INFO
+    org.camunda: INFO
+    hu.sg: DEBUG
+
+devEnvironment: true
