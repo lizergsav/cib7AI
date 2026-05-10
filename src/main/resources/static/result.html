@@ -1,0 +1,81 @@
+<form role="form">
+
+    <div class="alert alert-info">
+        <strong>AI Extraction Result</strong><br/><br/>
+        The following values were extracted from the uploaded document.
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th style="width: 30%">Field</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+
+        <tbody id="resultBody">
+        </tbody>
+    </table>
+
+    <script cam-script type="text/form-script">
+
+        camForm.on('form-loaded', function() {
+
+            camForm.variableManager.fetchVariable('output');
+        });
+
+        camForm.on('variables-fetched', function() {
+
+            var variable = camForm.variableManager.variable('output');
+
+            if (!variable || !variable.value) {
+                return;
+            }
+
+            try {
+
+                var rawJson = variable.value;
+
+                rawJson = rawJson
+                    .replace(/```json/g, '')
+                    .replace(/```/g, '')
+                    .trim();
+
+                var result = JSON.parse(rawJson);
+
+                var tbody = document.getElementById('resultBody');
+
+                Object.keys(result).forEach(function(key) {
+
+                    var row = document.createElement('tr');
+
+                    var keyCell = document.createElement('td');
+                    keyCell.innerHTML = '<strong>' + key + '</strong>';
+
+                    var valueCell = document.createElement('td');
+                    valueCell.textContent = result[key];
+
+                    row.appendChild(keyCell);
+                    row.appendChild(valueCell);
+
+                    tbody.appendChild(row);
+                });
+
+            } catch (e) {
+
+                var tbody = document.getElementById('resultBody');
+
+                var row = document.createElement('tr');
+
+                var cell = document.createElement('td');
+                cell.colSpan = 2;
+                cell.textContent = 'Invalid JSON response: ' + e;
+
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            }
+        });
+
+    </script>
+
+</form>

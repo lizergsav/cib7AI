@@ -1,0 +1,33 @@
+<form role="form">
+
+    <div class="alert alert-info">
+        <strong>AI Document Extraction</strong><br/><br/>
+
+        Please upload a document for AI processing.<br/>
+
+        Supported formats:
+        <ul>
+            <li>PDF</li>
+            <li>DOCX</li>
+            <li>TXT</li>
+        </ul>
+
+        The system will:
+        <ol>
+            <li>Extract text from the document</li>
+            <li>Analyze the content using AI</li>
+            <li>Extract configured business fields</li>
+        </ol>
+    </div>
+
+    <div class="form-group">
+        <label for="doc">Document</label>
+
+        <input type="file"
+               id="doc"
+               cam-variable-name="doc"
+               cam-variable-type="File"
+               class="form-control" />
+    </div>
+
+</form>
