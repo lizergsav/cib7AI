@@ -32,6 +32,7 @@ public class DocumentExtractionDelegate implements JavaDelegate {
                 .map(k -> "- " + k)
                 .collect(Collectors.joining("\n"));
 
+        /*
         String finalPrompt = """
         Extract the following fields from the document:
 
@@ -48,7 +49,32 @@ public class DocumentExtractionDelegate implements JavaDelegate {
 
         Document:
         %s
-        """.formatted(fieldList, input);
+        """.formatted(fieldList, input);*/
+        String finalPrompt = """
+            Extract the requested fields from the document.
+            
+            Requested fields:
+            %s
+            
+            Rules:
+            - Return ONLY valid compact JSON
+            - Do NOT use markdown
+            - Do NOT wrap the response in ```json
+            - Do NOT add explanations
+            - Use null if a field is missing
+            - Output must start with {
+            - Output must end with }
+            
+            Extraction rules:
+            - If a field appears only once, return a single value
+            - If a field appears multiple times in a repeating structure or table, return an array
+            - Preserve all detected occurrences
+            - Keep related table row values grouped together when possible
+            - Do not return only the first occurrence
+            
+            Document:
+            %s
+            """.formatted(fieldList, input);
 
         log.debug("Final prompt: {}", finalPrompt);
 

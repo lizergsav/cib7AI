@@ -15,10 +15,10 @@ spring:
     locale-date-format: yyyy-MM-dd HH:mm:ss
 
   datasource:
-    url: jdbc:h2:file:./data/cib7db;AUTO_SERVER=TRUE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/cib7db
+    driver-class-name: org.postgresql.Driver
+    username: sg
+    password: scooter
 
   h2:
     console:
@@ -32,6 +32,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: UTC
           lob:
@@ -50,14 +51,19 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
 
+minio:
+  url: http://localhost:9000
+  access-key: admin
+  secret-key: admin123
+
 camunda:
   bpm:
-    auto-deployment-enabled: true
+    auto-deployment-enabled: false
 
     admin-user:
-      id: admin
-      password: admin
-      firstName: Admin
+      id: sg
+      password: scooter
+      firstName: SG
 
     filter:
       create: All tasks

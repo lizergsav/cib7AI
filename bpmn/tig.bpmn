@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_02wdewh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="tig" name="tig" isExecutable="true" camunda:historyTimeToLive="0">
+    <bpmn:startEvent id="Event_0u57jcr">
+      <bpmn:outgoing>Flow_18n3vdl</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1ata0tb">
+      <bpmn:incoming>Flow_0n1udpg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_18n3vdl" sourceRef="Event_0u57jcr" targetRef="Activity_1qmg1fx" />
+    <bpmn:callActivity id="Activity_16c0p6z" name="Analyze doc" calledElement="analyzeDoc">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1b0zx7d</bpmn:incoming>
+      <bpmn:outgoing>Flow_13eihoq</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_13eihoq" sourceRef="Activity_16c0p6z" targetRef="Activity_0gbcene" />
+    <bpmn:sequenceFlow id="Flow_0hu62v3" sourceRef="Activity_0gbcene" targetRef="Activity_1c0ulh6" />
+    <bpmn:serviceTask id="Activity_0gbcene" name="upload document" camunda:delegateExpression="${uploadDocumentDelegate}">
+      <bpmn:incoming>Flow_13eihoq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hu62v3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0n1udpg" sourceRef="Activity_1c0ulh6" targetRef="Event_1ata0tb" />
+    <bpmn:userTask id="Activity_1c0ulh6" name="See the result" camunda:formKey="embedded:deployment:result.html">
+      <bpmn:incoming>Flow_0hu62v3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n1udpg</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Activity_1qmg1fx" name="Prepare Keys" scriptFormat="javascript">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="keys">
+            <camunda:list>
+              <camunda:value>Elszámolási időszak</camunda:value>
+              <camunda:value>Partner neve</camunda:value>
+              <camunda:value>Közreműködő neve </camunda:value>
+              <camunda:value>Jelentett időszak</camunda:value>
+              <camunda:value>Elszámolható időráfordítás</camunda:value>
+            </camunda:list>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18n3vdl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b0zx7d</bpmn:outgoing>
+      <bpmn:script>print('hello');</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1b0zx7d" sourceRef="Activity_1qmg1fx" targetRef="Activity_16c0p6z" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tig">
+      <bpmndi:BPMNShape id="BPMNShape_0qevog2" bpmnElement="Event_0u57jcr">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10ltv0k_di" bpmnElement="Activity_1qmg1fx">
+        <dc:Bounds x="280" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ata0tb_di" bpmnElement="Event_1ata0tb">
+        <dc:Bounds x="1102" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e7orgv_di" bpmnElement="Activity_16c0p6z">
+        <dc:Bounds x="600" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fbij8w_di" bpmnElement="Activity_0gbcene">
+        <dc:Bounds x="760" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r2qayg_di" bpmnElement="Activity_1c0ulh6">
+        <dc:Bounds x="950" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_18n3vdl_di" bpmnElement="Flow_18n3vdl">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="280" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13eihoq_di" bpmnElement="Flow_13eihoq">
+        <di:waypoint x="700" y="120" />
+        <di:waypoint x="760" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hu62v3_di" bpmnElement="Flow_0hu62v3">
+        <di:waypoint x="860" y="120" />
+        <di:waypoint x="950" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n1udpg_di" bpmnElement="Flow_0n1udpg">
+        <di:waypoint x="1050" y="120" />
+        <di:waypoint x="1102" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b0zx7d_di" bpmnElement="Flow_1b0zx7d">
+        <di:waypoint x="380" y="120" />
+        <di:waypoint x="600" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

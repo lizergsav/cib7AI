@@ -50,6 +50,8 @@ public class WorkflowParameters {
 
     public static final String DOCUMENT_UPLOAD_NAME = "doc";
     public static final String DOCUMENT_UPLOAD_RESULT_NAME = "documentText";
+    public static final String DOCUMENT_MINIO_OBJECT_ID  = "docId";
+    public static final String DOCUMENT_DOC_TYPE  = "docType";
 
     //AI
     public static final String AI_INPUT_NAME = "input";

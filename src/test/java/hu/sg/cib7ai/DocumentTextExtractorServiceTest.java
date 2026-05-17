@@ -28,7 +28,8 @@ public class DocumentTextExtractorServiceTest {
         ByteArrayInputStream inputStream =
                 new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
 
-        String extracted = service.extractText(inputStream);
+        byte[] context = inputStream.readAllBytes();
+        String extracted = service.extractText(context);
 
         assertTrue(extracted.contains("Hello CIB7 AI"));
     }

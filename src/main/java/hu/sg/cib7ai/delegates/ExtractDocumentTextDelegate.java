@@ -1,6 +1,7 @@
 package hu.sg.cib7ai.delegates;
 
 import hu.sg.cib7ai.services.DocumentTextExtractorService;
+import hu.sg.cib7ai.services.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cibseven.bpm.engine.delegate.DelegateExecution;
@@ -10,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
-import static hu.sg.cib7ai.config.WorkflowParameters.DOCUMENT_UPLOAD_NAME;
-import static hu.sg.cib7ai.config.WorkflowParameters.DOCUMENT_UPLOAD_RESULT_NAME;
+import static hu.sg.cib7ai.config.WorkflowParameters.*;
 
 @Slf4j
 @Service
@@ -32,11 +32,12 @@ public class ExtractDocumentTextDelegate implements JavaDelegate {
         log.info("Processing uploaded file: {}", fileValue.getFilename());
 
         try (InputStream inputStream = fileValue.getValue()) {
-
+            byte[] content = inputStream.readAllBytes();
+            log.info("Extracting text from document");
             String extractedText =
-                    documentTextExtractorService.extractText(inputStream);
-
+                    documentTextExtractorService.extractText(content);
             execution.setVariable(DOCUMENT_UPLOAD_RESULT_NAME, extractedText);
+            execution.setVariable(DOCUMENT_DOC_TYPE, Utils.detectDocumentType(fileValue.getFilename()));
 
             log.info("Document text extracted successfully");
         }

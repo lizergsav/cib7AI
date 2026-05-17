@@ -42,7 +42,8 @@ dependencies {
 	implementation "org.cibseven.bpm.springboot:cibseven-bpm-spring-boot-starter-rest:${cib7Version}"
 
 	// database
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	//runtimeOnly 'com.h2database:h2'
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
@@ -56,6 +57,14 @@ dependencies {
 	//Apache Tika
 	implementation 'org.apache.tika:tika-core:3.2.3'
 	implementation 'org.apache.tika:tika-parsers-standard-package:3.2.3'
+
+	//MinIO
+	implementation 'io.minio:minio:8.5.10'
+
+	//docx to pdf converter
+	implementation 'org.docx4j:docx4j-core:11.5.0'
+	implementation 'org.docx4j:docx4j-export-fo:11.5.0'
+	implementation 'org.apache.xmlgraphics:fop:2.9'
 
 	//developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	//developmentOnly 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
@@ -71,6 +80,10 @@ dependencyManagement {
 		mavenBom "org.springframework.boot:spring-boot-dependencies:3.5.6"
 		mavenBom "org.springframework.ai:spring-ai-bom:1.0.0"
 	}
+}
+
+jar {
+	enabled = false
 }
 
 tasks.named('test') {
