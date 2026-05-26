@@ -7,34 +7,32 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: gemma3:4b
-
   application:
     name: cib7ai
-
   web:
     locale: hu_HU
     local-resolver: fixed
     locale-date-format: yyyy-MM-dd HH:mm:ss
 
   datasource:
-    url: jdbc:h2:file:./data/cib7db
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/cib7db
+    driver-class-name: org.postgresql.Driver
     username: sa
-    password:
+    password: 
 
   h2:
     console:
       enabled: true
-      path: /h2-console
+      path: /sg-console
 
   jpa:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
     open-in-view: false
-    database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: UTC
           lob:
@@ -64,7 +62,7 @@ camunda:
 
     admin-user:
       id: sg
-      password:
+      password: 
       firstName: SG
 
     filter:
