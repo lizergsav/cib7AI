@@ -1,0 +1,66 @@
+<form role="form">
+
+    <div class="alert alert-info">
+        <strong>Process Variables</strong><br/><br/>
+        The following process variables are available in the workflow.
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th style="width: 30%">Variable</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+
+        <tbody id="resultBody">
+        </tbody>
+    </table>
+
+    <script cam-script type="text/form-script">
+
+        camForm.on('form-loaded', function() {
+
+            // fetch all variables
+            camForm.variableManager.fetchVariables();
+        });
+
+        camForm.on('variables-fetched', function() {
+
+            var tbody = document.getElementById('resultBody');
+
+            var variables = camForm.variableManager.variables;
+
+            Object.keys(variables).forEach(function(variableName) {
+
+                var variable = variables[variableName];
+
+                var row = document.createElement('tr');
+
+                var keyCell = document.createElement('td');
+                keyCell.innerHTML = '<strong>' + variableName + '</strong>';
+
+                var valueCell = document.createElement('td');
+
+                var value = variable.value;
+
+                // pretty print JSON objects
+                if (typeof value === 'object') {
+                    valueCell.innerHTML =
+                        '<pre style="margin:0;background:none;border:none;">' +
+                        JSON.stringify(value, null, 2) +
+                        '</pre>';
+                } else {
+                    valueCell.textContent = value;
+                }
+
+                row.appendChild(keyCell);
+                row.appendChild(valueCell);
+
+                tbody.appendChild(row);
+            });
+        });
+
+    </script>
+
+</form>

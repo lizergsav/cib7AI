@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0pw901w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="insuranceMain" name="insuranceMain" isExecutable="true" camunda:historyTimeToLive="0">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_12glf0r</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_18s9jjt" default="Flow_093r9n7">
+      <bpmn:incoming>Flow_12glf0r</bpmn:incoming>
+      <bpmn:outgoing>Flow_093r9n7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18xdbzz</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_12glf0r" sourceRef="StartEvent_1" targetRef="Gateway_18s9jjt" />
+    <bpmn:exclusiveGateway id="Gateway_0gad4hn">
+      <bpmn:incoming>Flow_07t9fak</bpmn:incoming>
+      <bpmn:incoming>Flow_1vfz5nz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zvv1yn</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_07t9fak" sourceRef="InsuranceSub" targetRef="Gateway_0gad4hn" />
+    <bpmn:endEvent id="Event_1fklpts">
+      <bpmn:incoming>Flow_0sl4odf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0zvv1yn" sourceRef="Gateway_0gad4hn" targetRef="Activity_067bghc" />
+    <bpmn:sequenceFlow id="Flow_1vfz5nz" sourceRef="Activity_18uas06" targetRef="Gateway_0gad4hn" />
+    <bpmn:sequenceFlow id="Flow_093r9n7" sourceRef="Gateway_18s9jjt" targetRef="Activity_18uas06" />
+    <bpmn:sequenceFlow id="Flow_18xdbzz" sourceRef="Gateway_18s9jjt" targetRef="InsuranceSub">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${insuranceType != null &amp;&amp; !insuranceType.trim().isEmpty()}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:callActivity id="InsuranceSub" name="InsuranceSub" calledElement="${insuranceType}">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18xdbzz</bpmn:incoming>
+      <bpmn:outgoing>Flow_07t9fak</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="Activity_18uas06" name="Error  Missing insuranceType" camunda:delegateExpression="${debug}">
+      <bpmn:incoming>Flow_093r9n7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vfz5nz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0sl4odf" sourceRef="Activity_067bghc" targetRef="Event_1fklpts" />
+    <bpmn:userTask id="Activity_067bghc" name="Show result">
+      <bpmn:incoming>Flow_0zvv1yn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sl4odf</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="insuranceMain">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_18s9jjt_di" bpmnElement="Gateway_18s9jjt" isMarkerVisible="true">
+        <dc:Bounds x="355" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0gad4hn_di" bpmnElement="Gateway_0gad4hn" isMarkerVisible="true">
+        <dc:Bounds x="725" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_190letk_di" bpmnElement="Activity_18uas06">
+        <dc:Bounds x="520" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fklpts_di" bpmnElement="Event_1fklpts">
+        <dc:Bounds x="1042" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05o3xwl_di" bpmnElement="Activity_067bghc">
+        <dc:Bounds x="850" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cjbny1_di" bpmnElement="InsuranceSub">
+        <dc:Bounds x="510" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12glf0r_di" bpmnElement="Flow_12glf0r">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="355" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_093r9n7_di" bpmnElement="Flow_093r9n7">
+        <di:waypoint x="380" y="145" />
+        <di:waypoint x="380" y="360" />
+        <di:waypoint x="520" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18xdbzz_di" bpmnElement="Flow_18xdbzz">
+        <di:waypoint x="405" y="120" />
+        <di:waypoint x="510" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07t9fak_di" bpmnElement="Flow_07t9fak">
+        <di:waypoint x="610" y="120" />
+        <di:waypoint x="725" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vfz5nz_di" bpmnElement="Flow_1vfz5nz">
+        <di:waypoint x="620" y="360" />
+        <di:waypoint x="750" y="360" />
+        <di:waypoint x="750" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zvv1yn_di" bpmnElement="Flow_0zvv1yn">
+        <di:waypoint x="775" y="120" />
+        <di:waypoint x="850" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sl4odf_di" bpmnElement="Flow_0sl4odf">
+        <di:waypoint x="950" y="120" />
+        <di:waypoint x="1042" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

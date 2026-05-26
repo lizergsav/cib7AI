@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="decisionDRD" name="decisionDRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <decision id="rule1" name="rule1" camunda:historyTimeToLive="0">
+    <decisionTable id="DecisionTable_08incfe" hitPolicy="FIRST">
+      <input id="InputClause_0bv5eeh" label="autoAra" camunda:inputVariable="price">
+        <inputExpression id="LiteralExpression_1ddnqrs" typeRef="long">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_07jjgrc" camunda:inputVariable="carType">
+        <inputExpression id="LiteralExpression_17dfmsy" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_164yddu" camunda:inputVariable="used">
+        <inputExpression id="LiteralExpression_0snc8xd" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="decision" name="rule1Dec" typeRef="long" />
+      <rule id="DecisionRule_1ydhbxy">
+        <inputEntry id="UnaryTests_1bxoy3v">
+          <text>&lt; 15000000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c79lci">
+          <text>"BYD","SKODA"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a8n8kc">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t2nnrl">
+          <text>price * 0.0001</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1v6dceo">
+        <inputEntry id="UnaryTests_02vi3l4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0b6tpw9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_015ganh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ux8piu">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="rule1">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

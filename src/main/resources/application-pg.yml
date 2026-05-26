@@ -17,8 +17,8 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/cib7db
     driver-class-name: org.postgresql.Driver
-    username: sa
-    password: 
+    username: sg
+    password: scooter
 
   h2:
     console:
