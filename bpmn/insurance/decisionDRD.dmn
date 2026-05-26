@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="decisionDRD" name="decisionDRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="decisionDRD" name="decisionDRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
   <decision id="rule1" name="rule1" camunda:historyTimeToLive="0">
     <decisionTable id="DecisionTable_08incfe" hitPolicy="FIRST">
       <input id="InputClause_0bv5eeh" label="autoAra" camunda:inputVariable="price">
@@ -48,11 +48,69 @@
       </rule>
     </decisionTable>
   </decision>
+  <decision id="rule2" name="rule2" camunda:historyTimeToLive="0">
+    <decisionTable id="DecisionTable_0k0pmqr" hitPolicy="FIRST">
+      <input id="InputClause_0r6ev18" camunda:inputVariable="color">
+        <inputExpression id="LiteralExpression_08987xj" typeRef="string" />
+      </input>
+      <output id="OutputClause_0755wq7" name="rule2Dec" typeRef="string">
+        <outputValues id="UnaryTests_1s0cn7m">
+          <text></text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1ip33z1">
+        <inputEntry id="UnaryTests_1o0932r">
+          <text>"black"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19qlgmm">
+          <text>"OK"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yu32de">
+        <inputEntry id="UnaryTests_0z1fc68">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qictm8">
+          <text>"NO"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="finalDec" name="finalDec" camunda:historyTimeToLive="0">
+    <variable id="InformationItem_0kgcgth" name="finalDec" typeRef="string" />
+    <informationRequirement id="InformationRequirement_16ax97x">
+      <requiredDecision href="#rule1" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_07paprw">
+      <requiredDecision href="#rule2" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_00odfqb">
+      <text> if rule2Dec = "OK"
+    then "Mehet"
+    else "Inkabb bicikli"</text>
+    </literalExpression>
+  </decision>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape dmnElementRef="rule1">
         <dc:Bounds height="80" width="180" x="160" y="80" />
       </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0igi0q7" dmnElementRef="rule2">
+        <dc:Bounds height="80" width="180" x="550" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1duz9hz" dmnElementRef="finalDec">
+        <dc:Bounds height="80" width="180" x="360" y="310" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gggsjg" dmnElementRef="InformationRequirement_16ax97x">
+        <di:waypoint x="250" y="160" />
+        <di:waypoint x="420" y="290" />
+        <di:waypoint x="420" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_00bhs0u" dmnElementRef="InformationRequirement_07paprw">
+        <di:waypoint x="640" y="160" />
+        <di:waypoint x="480" y="290" />
+        <di:waypoint x="480" y="310" />
+      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>
